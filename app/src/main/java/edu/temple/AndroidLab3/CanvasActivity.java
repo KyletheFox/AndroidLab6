@@ -1,4 +1,4 @@
-package edu.temple.lab3v2;
+package edu.temple.AndroidLab3;
 
 import android.app.Activity;
 import android.content.Intent;

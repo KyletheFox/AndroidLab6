@@ -1,4 +1,4 @@
-package edu.temple.lab3v2;
+package edu.temple.AndroidLab3;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("edu.temple.lab3v2", appContext.getPackageName());
+        assertEquals("edu.temple.AndroidLab3", appContext.getPackageName());
     }
 }

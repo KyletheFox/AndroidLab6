@@ -8,6 +8,6 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="edu.temple.lab3v2.PaletteActivity">
+    tools:context="edu.temple.AndroidLab3.PaletteActivity">
 
 </RelativeLayout>

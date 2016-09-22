@@ -1,4 +1,4 @@
-package edu.temple.lab3v2;
+package edu.temple.AndroidLab3;
 
 import android.content.Context;
 import android.graphics.Color;
