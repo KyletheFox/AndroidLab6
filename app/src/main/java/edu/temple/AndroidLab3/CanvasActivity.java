@@ -9,8 +9,11 @@ import android.widget.Spinner;
 
 public class CanvasActivity extends Activity {
 
+    boolean selectedFirst = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_canvas);
 
@@ -25,9 +28,13 @@ public class CanvasActivity extends Activity {
         spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Intent colorActivityLauncher = new Intent(CanvasActivity.this, PaletteActivity.class);
-                colorActivityLauncher.putExtra("Color", colors[position]);
-                startActivity(colorActivityLauncher);
+                if (selectedFirst) {
+                    Intent colorActivityLauncher = new Intent(CanvasActivity.this, PaletteActivity.class);
+                    colorActivityLauncher.putExtra("Color", colors[position]);
+                    startActivity(colorActivityLauncher);
+                } else {
+                    selectedFirst = true;
+                }
             }
 
             @Override
