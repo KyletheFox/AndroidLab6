@@ -1,10 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Lab 3</string>
     <string-array name="color_array">
-        <item>Red</item>
-        <item>Yellow</item>
-        <item>Green</item>
-        <item>Blue</item>
+        <item>Rojo</item>
+        <item>Amarillo</item>
+        <item>Verde</item>
+        <item>Azul</item>
         <item>Magenta</item>
     </string-array>
     <string-array name="actual_color_array">

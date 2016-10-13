@@ -2,6 +2,7 @@ package edu.temple.AndroidLab3;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,9 +20,11 @@ public class CanvasActivity extends Activity {
 
         Spinner spin = (Spinner) findViewById(R.id.spinner);
 
-        final String[] colors = {"Red", "Yellow", "Green", "Blue", "Magenta"};
+        Resources res = getResources();
+        final String[] colors = res.getStringArray(R.array.color_array);
+        final String[] actualColors = res.getStringArray(R.array.actual_color_array);
 
-        CustomAdapter adapter = new CustomAdapter(CanvasActivity.this, android.R.layout.simple_spinner_dropdown_item, colors);
+        CustomAdapter adapter = new CustomAdapter(CanvasActivity.this, android.R.layout.simple_spinner_dropdown_item, colors, actualColors);
 
         spin.setAdapter(adapter);
 
@@ -30,7 +33,7 @@ public class CanvasActivity extends Activity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (selectedFirst) {
                     Intent colorActivityLauncher = new Intent(CanvasActivity.this, PaletteActivity.class);
-                    colorActivityLauncher.putExtra("Color", colors[position]);
+                    colorActivityLauncher.putExtra("Color", actualColors[position]);
                     startActivity(colorActivityLauncher);
                 } else {
                     selectedFirst = true;
