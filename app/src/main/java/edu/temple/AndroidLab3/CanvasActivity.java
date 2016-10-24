@@ -1,49 +1,63 @@
 package edu.temple.AndroidLab3;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.content.res.Resources;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Spinner;
 
-public class CanvasActivity extends Activity {
+public class CanvasActivity extends Activity implements CanvasFragment.CanvasInterface {
 
-    boolean selectedFirst = false;
+    boolean twoPanes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_canvas);
+        setContentView(R.layout.activity_main);
 
-        Spinner spin = (Spinner) findViewById(R.id.spinner);
+        // See if the palette fragment has be init
+        twoPanes = (findViewById(R.id.palette_fragment) != null);
 
-        Resources res = getResources();
-        final String[] colors = res.getStringArray(R.array.color_array);
-        final String[] actualColors = res.getStringArray(R.array.actual_color_array);
+        CanvasFragment canvasFragment = new CanvasFragment();
 
-        CustomAdapter adapter = new CustomAdapter(CanvasActivity.this, android.R.layout.simple_spinner_dropdown_item, colors, actualColors);
+        Bundle bundle = new Bundle();
+        bundle.putStringArray(canvasFragment.dataKey, getResources().getStringArray(R.array.color_array));
+        canvasFragment.setArguments(bundle);
 
-        spin.setAdapter(adapter);
+        loadFragment(R.id.canvas_fragment, canvasFragment, false);
 
-        spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (selectedFirst) {
-                    Intent colorActivityLauncher = new Intent(CanvasActivity.this, PaletteActivity.class);
-                    colorActivityLauncher.putExtra("Color", actualColors[position]);
-                    startActivity(colorActivityLauncher);
-                } else {
-                    selectedFirst = true;
-                }
-            }
+        if (twoPanes) {
+            loadFragment(R.id.palette_fragment, new PaletteFragment(), false);
+        }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+    }
 
-            }
-        });
+    @Override
+    public void acceptBgColor(String str) {
+        PaletteFragment paletteFragment = new PaletteFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString(paletteFragment.dataKey, str);
+        paletteFragment.setArguments(bundle);
+
+        if (twoPanes) {
+            loadFragment(R.id.palette_fragment, paletteFragment, !twoPanes);
+        } else {
+            loadFragment(R.id.canvas_fragment, paletteFragment, !twoPanes);
+        }
+    }
+
+    //  Load fragment in a specified frame
+    private void loadFragment(int paneId, Fragment fragment, boolean placeOnBackstack){
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction()
+                .replace(paneId, fragment);
+        if (placeOnBackstack)
+            ft.addToBackStack(null);
+        ft.commit();
+
+        //  Ensure fragment is attachecd before attempting to call its public methods
+        fm.executePendingTransactions();
     }
 }
